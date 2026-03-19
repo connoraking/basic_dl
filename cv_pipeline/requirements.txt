@@ -1,0 +1,6 @@
+torch
+torchvision
+PyYAML
+matplotlib
+pandas
+ipython

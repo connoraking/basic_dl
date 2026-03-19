@@ -1,3 +1,6 @@
+import random
+
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -25,6 +28,40 @@ def get_optimizer(config, model):
 
     else:
         raise ValueError("Unknown optimizer")
+
+
+def get_rng_state():
+    rng_state = {
+        "python": random.getstate(),
+        "numpy": np.random.get_state(),
+        "torch": torch.get_rng_state(),
+    }
+
+    if torch.cuda.is_available():
+        rng_state["torch_cuda"] = torch.cuda.get_rng_state_all()
+
+    return rng_state
+
+
+def build_checkpoint(
+    config,
+    model,
+    optimizer,
+    epoch,
+    best_epoch,
+    best_val_loss,
+    run_name,
+):
+    return {
+        "config": config,
+        "run_name": run_name,
+        "epoch": epoch,
+        "best_epoch": best_epoch,
+        "best_val_loss": best_val_loss,
+        "model_state_dict": model.state_dict(),
+        "optimizer_state_dict": optimizer.state_dict(),
+        "rng_state": get_rng_state(),
+    }
 
 
 def evaluate_model(model, loader, criterion, device):
@@ -145,7 +182,16 @@ def train_model(config, model, train_loader, val_loader, device, checkpoint_path
             best_epoch = epoch + 1
             epochs_without_improvement = 0
 
-            torch.save(model.state_dict(), checkpoint_path)
+            checkpoint = build_checkpoint(
+                config=config,
+                model=model,
+                optimizer=optimizer,
+                epoch=epoch + 1,
+                best_epoch=best_epoch,
+                best_val_loss=best_val_loss,
+                run_name=run_name,
+            )
+            torch.save(checkpoint, checkpoint_path)
             print("Saved new best model")
 
         else:
