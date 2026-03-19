@@ -23,5 +23,7 @@ training:
   early_stopping: true
   patience: 5
   min_delta: 0.001
+  show_plot: true
+  save_plot: true
 
 notes: baseline run

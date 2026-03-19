@@ -35,6 +35,7 @@ def run_experiment(config_path):
         val_loader=data_info["val_loader"],
         device=device,
         checkpoint_path=checkpoint_path,
+        run_name=run_name,
     )
 
     best_model = build_model(config, data_info).to(device)
