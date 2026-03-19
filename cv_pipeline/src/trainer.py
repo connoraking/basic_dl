@@ -31,9 +31,16 @@ def get_optimizer(config, model):
 
 
 def get_rng_state():
+    numpy_state = np.random.get_state()
     rng_state = {
         "python": random.getstate(),
-        "numpy": np.random.get_state(),
+        "numpy": {
+            "bit_generator": numpy_state[0],
+            "state": numpy_state[1].tolist(),
+            "pos": numpy_state[2],
+            "has_gauss": numpy_state[3],
+            "cached_gaussian": numpy_state[4],
+        },
         "torch": torch.get_rng_state(),
     }
 
