@@ -85,7 +85,7 @@ def run_experiment(config_or_path):
     )
 
     best_model = build_model(config, data_info).to(device)
-    checkpoint = torch.load(checkpoint_path, map_location=device, weights_only=True)
+    checkpoint = torch.load(checkpoint_path, map_location=device, weights_only=False)
     best_model.load_state_dict(checkpoint["model_state_dict"])
 
     test_results = test_model(
