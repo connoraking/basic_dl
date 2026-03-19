@@ -10,6 +10,7 @@ def build_run_name(config):
     if model_cfg["name"] == "custom_cnn":
         return (
             f"{dataset_name}_"
+            f"{model_cfg}_"
             f"{model_cfg['activation']}_"
             f"{model_cfg['conv1_filters']}-{model_cfg['conv2_filters']}-{model_cfg['conv3_filters']}_"
             f"k{model_cfg['kernel_size']}_"

@@ -13,8 +13,11 @@ def load_config(config_path):
         return yaml.safe_load(f)
 
 
-def run_experiment(config_path):
-    config = load_config(config_path)
+def run_experiment(config_or_path):
+    if isinstance(config_or_path, str):
+        config = load_config(config_or_path)
+    else:
+        config = config_or_path
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print("Using device:", device)
