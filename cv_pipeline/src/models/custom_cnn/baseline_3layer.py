@@ -11,6 +11,12 @@ def get_activation(name):
         return nn.GELU()
     if name == "tanh":
         return nn.Tanh()
+    if name == "silu":
+        return nn.SiLU()
+    if name == "mish":
+        return nn.Mish()
+    if name == "prelu":
+        return nn.PReLU()
     raise ValueError(f"Unknown activation: {name}")
 
 
