@@ -1,0 +1,32 @@
+dataset:
+  name: cifar10
+  data_dir: ./data
+  augmentation: flip_crop
+  train_fraction: 0.9
+  num_workers: 2
+
+model:
+  name: vit
+  patch_size: 4
+  embed_dim: 192
+  depth: 6
+  num_heads: 6
+  mlp_dim: 768
+  dropout: 0.1
+  attention_dropout: 0.1
+  activation: gelu
+
+training:
+  batch_size: 128
+  learning_rate: 0.0003
+  epochs: 30
+  optimizer: adam
+  early_stopping: true
+  patience: 7
+  min_delta: 0.001
+  show_plot: true
+  save_plot: true
+  seed: 42
+  deterministic: true
+
+notes: tiny vit baseline on cifar10

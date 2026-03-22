@@ -1,5 +1,6 @@
 from src.models.custom_cnn.baseline_3layer import CustomCNN_3layer
 from src.models.resnet import ResNet18Classifier
+from src.models.vit import ViTClassifier
 
 
 def build_model(config, data_info):
@@ -15,5 +16,13 @@ def build_model(config, data_info):
 
     if name == "resnet18":
         return ResNet18Classifier(num_classes=data_info["num_classes"])
+
+    if name == "vit":
+        return ViTClassifier(
+            model_config=model_cfg,
+            num_classes=data_info["num_classes"],
+            input_channels=data_info["input_channels"],
+            image_size=data_info["image_size"],
+        )
 
     raise ValueError(f"Unknown model: {name}")
