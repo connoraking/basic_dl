@@ -7,12 +7,24 @@ def build_run_name(config):
     model_cfg = config["model"]
     train_cfg = config["training"]
 
-    if model_cfg["name"] == "custom_cnn":
+    if model_cfg["name"] in {"custom_cnn", "custom_cnn_large"}:
+        conv_filters = [
+            str(model_cfg[key])
+            for key in (
+                "conv1_filters",
+                "conv2_filters",
+                "conv3_filters",
+                "conv4_filters",
+                "conv5_filters",
+                "conv6_filters",
+            )
+            if key in model_cfg
+        ]
         return (
             f"{dataset_name}_"
-            f"{model_cfg["name"]}_"
+            f"{model_cfg['name']}_"
             f"{model_cfg['activation']}_"
-            f"{model_cfg['conv1_filters']}-{model_cfg['conv2_filters']}-{model_cfg['conv3_filters']}_"
+            f"{'-'.join(conv_filters)}_"
             f"k{model_cfg['kernel_size']}_"
             f"drop{model_cfg['dropout']}_"
             f"{train_cfg['optimizer']}_"
@@ -45,6 +57,9 @@ def append_experiment_log(config, train_results, test_results):
         "conv1_filters": config["model"].get("conv1_filters"),
         "conv2_filters": config["model"].get("conv2_filters"),
         "conv3_filters": config["model"].get("conv3_filters"),
+        "conv4_filters": config["model"].get("conv4_filters"),
+        "conv5_filters": config["model"].get("conv5_filters"),
+        "conv6_filters": config["model"].get("conv6_filters"),
         "kernel_size": config["model"].get("kernel_size"),
         "dropout": config["model"].get("dropout"),
         "optimizer": config["training"]["optimizer"],

@@ -1,4 +1,5 @@
 from src.models.custom_cnn.baseline_3layer import CustomCNN_3layer
+from src.models.custom_cnn.baseline_6layer import CustomCNN_6layer
 from src.models.resnet import ResNet18Classifier
 from src.models.vit import ViTClassifier
 
@@ -9,6 +10,13 @@ def build_model(config, data_info):
 
     if name == "custom_cnn":
         return CustomCNN_3layer(
+            model_config=model_cfg,
+            num_classes=data_info["num_classes"],
+            input_channels=data_info["input_channels"],
+        )
+
+    if name == "custom_cnn_large":
+        return CustomCNN_6layer(
             model_config=model_cfg,
             num_classes=data_info["num_classes"],
             input_channels=data_info["input_channels"],

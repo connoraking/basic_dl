@@ -1,0 +1,68 @@
+dataset:
+  name: cifar10
+  data_dir: ./data
+  augmentation: flip_crop
+  train_fraction: 0.9
+  num_workers: 4
+
+model:
+  name: custom_cnn
+  activation: relu
+  conv1_filters: 64
+  conv2_filters: 128
+  conv3_filters: 128
+  conv4_filters: 256
+  conv5_filters: 256
+  conv6_filters: 512
+  kernel_size: 3
+  dropout: 0.2
+  classifier_hidden_dim: 512
+
+training:
+  batch_size: 128
+  learning_rate: 0.01
+  optimizer: sgd
+  weight_decay: 1e-4
+  epochs: 100
+  early_stopping: true
+  patience: 8
+  min_delta: 0.001
+  show_plot: false
+  save_plot: true
+
+notes: larger 6-layer CNN with adaptive pooling
+
+dataset:
+  name: cifar10
+  data_dir: ./data
+  augmentation: flip_crop
+  train_fraction: 0.9
+  num_workers: 2
+
+model:
+  name: custom_cnn_large
+  activation: relu
+  conv1_filters: 64
+  conv2_filters: 64
+  conv3_filters: 128
+  conv4_filters: 128
+  conv5_filters: 256
+  conv6_filters: 256
+  kernel_size: 3
+  dropout: 0.2
+  classifier_hidden_dim: 512
+
+training:
+  batch_size: 128
+  learning_rate: 0.001
+  epochs: 50
+  optimizer: adam
+  early_stopping: true
+  patience: 7
+  min_delta: 0.001
+  show_plot: true
+  save_plot: true
+  seed: 42
+  deterministic: true
+
+notes: larger 6-layer cnn baseline on cifar10
